@@ -1,6 +1,5 @@
 package com.example.domain;
 
-public class Cargo {
+public class CargoDelivery {
     private TrackingId trackingId;
-    private DeliverySpecification goal;
 }
