@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class HandlingEvent {
-    CargoDelivery handledCargoDelivery;
+    Cargo handledCargo;
     CarrierMovement carrierMovement;
 }
