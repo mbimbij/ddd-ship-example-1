@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.domain.common;
 
 import com.example.domain.common.DomainEvent;
 import com.example.domain.common.IHandleDomainEvents;

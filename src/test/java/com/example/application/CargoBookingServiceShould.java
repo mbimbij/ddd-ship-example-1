@@ -1,6 +1,6 @@
 package com.example.application;
 
-import com.example.application.adapter.out.InMemoryEventStore;
+import com.example.adapter.out.InMemoryEventStore;
 import com.example.domain.CargoTrackingId;
 import com.example.domain.Customer;
 import com.example.domain.Location;

@@ -1,6 +1,6 @@
-package com.example.application.adapter.out;
+package com.example.adapter.out;
 
-import com.example.domain.IStoreEvent;
+import com.example.domain.common.IStoreEvent;
 import com.example.domain.common.DomainEvent;
 
 import java.util.ArrayList;

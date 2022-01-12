@@ -14,7 +14,7 @@ public class Cargo {
     private final Customer recipient;
     private final DeliverySpecification deliverySpecification;
 
-    private List<DomainEvent> uncommittedChanges = new ArrayList<>();
+    private final List<DomainEvent> uncommittedChanges = new ArrayList<>();
 
     public Cargo(CargoTrackingId cargoTrackingId, Customer payer, Customer recipient, DeliverySpecification deliverySpecification) {
         this.cargoTrackingId = cargoTrackingId;
