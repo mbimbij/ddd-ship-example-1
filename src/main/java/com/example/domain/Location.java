@@ -1,6 +1,8 @@
 package com.example.domain;
 
+import lombok.Value;
+
+@Value
 public class Location {
-    public Location(String locationCode) {
-    }
+    String locationCode;
 }

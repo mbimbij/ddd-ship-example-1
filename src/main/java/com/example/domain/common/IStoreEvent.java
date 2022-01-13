@@ -1,8 +1,8 @@
 package com.example.domain.common;
 
-import com.example.domain.common.DomainEvent;
-import com.example.domain.common.IHandleDomainEvents;
+import java.util.List;
 
 public interface IStoreEvent extends IHandleDomainEvents {
-    void store(DomainEvent domainEvent);
+    void store(HandlingEvent handlingEvent);
+    List<HandlingEvent> findById(Id<String> id);
 }

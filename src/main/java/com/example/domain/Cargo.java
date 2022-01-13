@@ -1,20 +1,31 @@
 package com.example.domain;
 
 import com.example.domain.booking.CargoBookedEvent;
-import com.example.domain.common.DomainEvent;
+import com.example.domain.common.HandlingEvent;
+import com.example.domain.loading.CargoLoadedOnVesselEvent;
+import lombok.Builder;
 import lombok.Getter;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Builder
 public class Cargo {
     private final CargoTrackingId cargoTrackingId;
     private final Customer payer;
     private final Customer recipient;
     private final DeliverySpecification deliverySpecification;
 
-    private final List<DomainEvent> uncommittedChanges = new ArrayList<>();
+    private final List<HandlingEvent> uncommittedChanges = new ArrayList<>();
+
+    public Cargo(CargoBookedEvent cargoBookedEvent) {
+        cargoTrackingId = cargoBookedEvent.getCargoTrackingId();
+        payer = cargoBookedEvent.getPayer();
+        recipient = cargoBookedEvent.getRecipient();
+        deliverySpecification = new DeliverySpecification(cargoBookedEvent.getDeparture(), cargoBookedEvent.getArrival());
+    }
 
     public Cargo(CargoTrackingId cargoTrackingId, Customer payer, Customer recipient, DeliverySpecification deliverySpecification) {
         this.cargoTrackingId = cargoTrackingId;
@@ -27,5 +38,9 @@ public class Cargo {
                                                     recipient,
                                                     deliverySpecification.getDeparture(),
                                                     deliverySpecification.getArrival()));
+    }
+
+    public void load(ZonedDateTime timestamp, Location location, VesselVoyage vesselVoyage) {
+        uncommittedChanges.add(new CargoLoadedOnVesselEvent(cargoTrackingId, timestamp, location, vesselVoyage));
     }
 }
