@@ -3,6 +3,7 @@ package com.example.domain;
 import com.example.domain.booking.CargoBookedEvent;
 import com.example.domain.common.HandlingEvent;
 import com.example.domain.loading.CargoLoadedOnVesselEvent;
+import com.example.domain.loading.CargoUnloadedOnVesselEvent;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -42,5 +43,9 @@ public class Cargo {
 
     public void load(ZonedDateTime timestamp, Location location, VesselVoyage vesselVoyage) {
         uncommittedChanges.add(new CargoLoadedOnVesselEvent(cargoTrackingId, timestamp, location, vesselVoyage));
+    }
+
+    public void unload(ZonedDateTime timestamp, Location location, VesselVoyage vesselVoyage) {
+        uncommittedChanges.add(new CargoUnloadedOnVesselEvent(cargoTrackingId, timestamp, location, vesselVoyage));
     }
 }
