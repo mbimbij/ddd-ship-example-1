@@ -6,6 +6,7 @@ import com.example.domain.VesselVoyage;
 
 import java.time.ZonedDateTime;
 
+@FunctionalInterface
 public interface IUnloadCargoFromVessel {
     void unloadCargo(CargoTrackingId cargoTrackingId, ZonedDateTime cargoUnloadingTime, Location arrival, VesselVoyage vesselVoyage);
 }
