@@ -1,7 +1,6 @@
 package com.example.application;
 
 import com.example.adapter.out.InMemoryEventStore;
-import com.example.application.CargoReceptionSignOffService;
 import com.example.domain.Location;
 import com.example.domain.VesselVoyage;
 import com.example.domain.booking.CargoBookedEvent;
@@ -52,7 +51,8 @@ class CargoReceptionSignOffServiceShould {
     @Test
     void signOffCargoReception_whenCargoAtDestination() {
         // WHEN
-        cargoReceptionSignOffService.signOff(recipient, cargoTrackingId, arrival, receptionTimestamp);
+        CargoSignoffCommand cargoSignoffCommand = new CargoSignoffCommand(recipient, cargoTrackingId, arrival, receptionTimestamp);
+        cargoReceptionSignOffService.signOff(cargoSignoffCommand);
 
         // THEN
         CargoReceptionSignedOffEvent expectedEvent = new CargoReceptionSignedOffEvent(recipient, cargoTrackingId, receptionTimestamp);
@@ -68,7 +68,8 @@ class CargoReceptionSignOffServiceShould {
         inMemoryEventStore.store(new CargoUnloadedFromVesselEvent(cargoTrackingId, ZonedDateTime.now().plusDays(2), intermediate, vesselVoyage));
 
         // WHEN
-        assertThatThrownBy(() -> cargoReceptionSignOffService.signOff(recipient, cargoTrackingId, intermediate, receptionTimestamp)).isInstanceOf(CargoNotAtDestinationException.class);
+        CargoSignoffCommand cargoSignoffCommand = new CargoSignoffCommand(recipient, cargoTrackingId, intermediate, receptionTimestamp);
+        assertThatThrownBy(() -> cargoReceptionSignOffService.signOff(cargoSignoffCommand)).isInstanceOf(CargoNotAtDestinationException.class);
 
         // THEN
         assertThat(inMemoryEventStore.getEvents()).noneMatch(handlingEvent -> handlingEvent instanceof CargoReceptionSignedOffEvent);

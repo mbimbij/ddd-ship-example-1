@@ -18,9 +18,14 @@ public class CargoReceptionSignOffService implements ISignOffCargoReception {
     private final CargoRepository cargoRepository;
 
     @Override
-    public void signOff(Customer recipient, CargoTrackingId cargoTrackingId, Location location, ZonedDateTime receptionTimestamp) {
+    public void signOff(CargoSignoffCommand cargoSignoffCommand) {
+        CargoTrackingId cargoTrackingId = cargoSignoffCommand.cargoTrackingId();
+        Customer recipient = cargoSignoffCommand.recipient();
+        Location signoffLocation = cargoSignoffCommand.location();
+        ZonedDateTime receptionTimestamp = cargoSignoffCommand.receptionTimestamp();
+
         Cargo cargo = cargoRepository.findById(cargoTrackingId).orElseThrow(() -> new CargoNotFoundException(cargoTrackingId));
-        cargo.signOff(recipient, location, receptionTimestamp);
+        cargo.signOff(recipient, signoffLocation, receptionTimestamp);
         eventPublisher.publish(cargo.getUncommittedChanges());
     }
 }
