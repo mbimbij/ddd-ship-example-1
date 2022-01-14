@@ -1,12 +1,8 @@
 package com.example.application.port.in;
 
-import com.example.domain.CargoTrackingId;
-import com.example.domain.Location;
-import com.example.domain.VesselVoyage;
-
-import java.time.ZonedDateTime;
+import com.example.application.CargoLoadingCommand;
 
 @FunctionalInterface
 public interface IUnloadCargoFromVessel {
-    void unloadCargo(CargoTrackingId cargoTrackingId, ZonedDateTime cargoUnloadingTime, Location arrival, VesselVoyage vesselVoyage);
+    void unloadCargo(CargoLoadingCommand cargoLoadingCommand);
 }

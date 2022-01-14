@@ -54,7 +54,7 @@ class CargoLoadingServiceShould {
         CargoLoadedOnVesselEvent expectedEvent = new CargoLoadedOnVesselEvent(cargoTrackingId, cargoLoadingTime, departure, vesselVoyage);
 
         // WHEN
-        cargoLoadingService.loadCargo(cargoTrackingId, cargoLoadingTime, departure, vesselVoyage);
+        cargoLoadingService.loadCargo(new CargoLoadingCommand(cargoTrackingId, cargoLoadingTime, departure, vesselVoyage));
 
         // THEN
         assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
@@ -73,7 +73,7 @@ class CargoLoadingServiceShould {
                                                               vesselVoyage));
 
         // WHEN
-        cargoLoadingService.unloadCargo(cargoTrackingId, cargoUnloadingTime, arrival, vesselVoyage);
+        cargoLoadingService.unloadCargo(new CargoLoadingCommand(cargoTrackingId, cargoUnloadingTime, arrival, vesselVoyage));
 
         // THEN
         assertThat(inMemoryEventStore.getEvents()).contains(new CargoUnloadedFromVesselEvent(cargoTrackingId,
