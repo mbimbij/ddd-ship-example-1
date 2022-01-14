@@ -11,7 +11,7 @@ import com.example.domain.booking.CargoBookedEvent;
 import com.example.domain.common.DomainEventPublisher;
 import com.example.domain.common.IdStringGenerator;
 import com.example.domain.loading.CargoLoadedOnVesselEvent;
-import com.example.domain.loading.CargoUnloadedOnVesselEvent;
+import com.example.domain.loading.CargoUnloadedFromVesselEvent;
 import com.example.utils.Pair;
 import com.example.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,9 +76,9 @@ class CargoLoadingServiceShould {
         cargoLoadingService.unloadCargo(cargoTrackingId, cargoUnloadingTime, arrival, vesselVoyage);
 
         // THEN
-        assertThat(inMemoryEventStore.getEvents()).contains(new CargoUnloadedOnVesselEvent(cargoTrackingId,
-                                                                                           cargoUnloadingTime,
-                                                                                           arrival,
-                                                                                           vesselVoyage));
+        assertThat(inMemoryEventStore.getEvents()).contains(new CargoUnloadedFromVesselEvent(cargoTrackingId,
+                                                                                             cargoUnloadingTime,
+                                                                                             arrival,
+                                                                                             vesselVoyage));
     }
 }

@@ -11,12 +11,12 @@ import java.time.ZonedDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
-public class CargoUnloadedOnVesselEvent extends HandlingEvent {
+public class CargoUnloadedFromVesselEvent extends HandlingEvent {
     ZonedDateTime cargoUnloadingTime;
     Location location;
     VesselVoyage vesselVoyage;
 
-    public CargoUnloadedOnVesselEvent(CargoTrackingId cargoTrackingId, ZonedDateTime cargoUnloadingTime, Location location, VesselVoyage vesselVoyage) {
+    public CargoUnloadedFromVesselEvent(CargoTrackingId cargoTrackingId, ZonedDateTime cargoUnloadingTime, Location location, VesselVoyage vesselVoyage) {
         super(cargoTrackingId);
         this.cargoUnloadingTime = cargoUnloadingTime;
         this.location = location;

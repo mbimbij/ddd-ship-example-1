@@ -3,13 +3,16 @@ package com.example.domain;
 import com.example.domain.booking.CargoBookedEvent;
 import com.example.domain.common.HandlingEvent;
 import com.example.domain.loading.CargoLoadedOnVesselEvent;
-import com.example.domain.loading.CargoUnloadedOnVesselEvent;
+import com.example.domain.loading.CargoUnloadedFromVesselEvent;
+import com.example.domain.signoff.CargoNotAtDestinationException;
+import com.example.domain.signoff.CargoReceptionSignedOffEvent;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Builder
@@ -46,6 +49,17 @@ public class Cargo {
     }
 
     public void unload(ZonedDateTime timestamp, Location location, VesselVoyage vesselVoyage) {
-        uncommittedChanges.add(new CargoUnloadedOnVesselEvent(cargoTrackingId, timestamp, location, vesselVoyage));
+        uncommittedChanges.add(new CargoUnloadedFromVesselEvent(cargoTrackingId, timestamp, location, vesselVoyage));
+    }
+
+    public void signOff(Customer recipient, Location location, ZonedDateTime receptionTimestamp) {
+        if(!isArrivedAtDestination(location)){
+            throw new CargoNotAtDestinationException();
+        }
+        uncommittedChanges.add(new CargoReceptionSignedOffEvent(recipient, cargoTrackingId, receptionTimestamp));
+    }
+
+    private boolean isArrivedAtDestination(Location location) {
+        return Objects.equals(location, deliverySpecification.getArrival());
     }
 }
